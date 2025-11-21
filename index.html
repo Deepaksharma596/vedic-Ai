@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vedic Wisdom AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Merriweather', 'serif'],
+            },
+            colors: {
+              saffron: {
+                50: '#fff8f1',
+                100: '#feebd7',
+                200: '#fdd5ae',
+                300: '#fbb57c',
+                400: '#f99048',
+                500: '#f66d1e',
+                600: '#e84f12',
+                700: '#c1380f',
+                800: '#992e12',
+                900: '#7b2812',
+                950: '#431407',
+              },
+              stone: {
+                850: '#262321',
+                950: '#0c0a09',
+              },
+              'vedic-teal': {
+                400: '#2dd4bf',
+                500: '#14b8a6',
+                600: '#0d9488',
+                900: '#134e4a',
+              }
+            },
+            transitionTimingFunction: {
+              'material': 'cubic-bezier(0.2, 0.0, 0, 1.0)',
+              'material-decelerate': 'cubic-bezier(0.05, 0.7, 0.1, 1.0)',
+              'material-accelerate': 'cubic-bezier(0.3, 0.0, 0.8, 0.15)',
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.6s cubic-bezier(0.2, 0.0, 0, 1.0) forwards',
+              'slide-up': 'slideUp 0.5s cubic-bezier(0.2, 0.0, 0, 1.0) forwards',
+              'scale-in': 'scaleIn 0.4s cubic-bezier(0.2, 0.0, 0, 1.0) forwards',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'spin-slow': 'spin 12s linear infinite',
+              'drawTilak': 'drawTilak 2s ease-in-out infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              scaleIn: {
+                '0%': { transform: 'scale(0.9) translateY(10px)', opacity: '0' },
+                '100%': { transform: 'scale(1) translateY(0)', opacity: '1' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body { 
+        background-color: #0c0a09; 
+        color: #e7e5e4;
+        -webkit-tap-highlight-color: transparent;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #44403c; 
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #57534e; 
+      }
+      .glass-panel {
+        background: rgba(28, 25, 23, 0.95);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+      /* Custom utility for transform origin based transitions */
+      .origin-menu {
+        transition: transform 0.4s cubic-bezier(0.2, 0.0, 0, 1.0), 
+                    opacity 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
+      }
+    </style>
+    <!-- Removed importmap so Vite/bundler resolves local dependencies from node_modules -->
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <!-- Vite entry (only) -->
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+/* Minimal index.css to satisfy link and ensure root fills viewport */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+/* Basic smoothing */
+* { box-sizing: border-box; }
