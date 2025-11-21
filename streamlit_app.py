@@ -7,8 +7,11 @@ import urllib.request
 import streamlit as st
 
 # Configuration
-BUILD_DIR = os.path.join(os.path.dirname(__file__), "dist")  # Vite output
+BUILD_DIR = os.path.join(os.path.dirname(__file__), "dist")  # Vite output (local)
 STATIC_PORT = 3002
+
+# Prefer the GitHub Pages URL for the repo (deployed by the workflow). Replace owner/repo as needed.
+GITHUB_PAGES_URL = "https://Deepaksharma596.github.io/vedic-Ai/"
 
 
 def start_static_server(directory: str, port: int):
@@ -19,26 +22,33 @@ def start_static_server(directory: str, port: int):
         httpd.serve_forever()
 
 
-# Start the static server in a background thread if the build exists
-if not os.path.isdir(BUILD_DIR):
-    st.error(f"Build directory not found: {BUILD_DIR}\nRun `npm run build` in the project root first.")
-    st.stop()
-
-server_thread = threading.Thread(target=start_static_server, args=(BUILD_DIR, STATIC_PORT), daemon=True)
-server_thread.start()
-
-# Wait for the static server to come up
-url = f"http://localhost:{STATIC_PORT}/"
-for _ in range(30):
+# Try to use GitHub Pages first — this avoids running a local static server in hosted environments.
+def url_is_available(check_url: str, timeout: float = 2.0) -> bool:
     try:
-        with urllib.request.urlopen(url, timeout=1) as resp:
-            if resp.status == 200:
-                break
+        with urllib.request.urlopen(check_url, timeout=timeout) as resp:
+            return resp.status == 200
     except Exception:
-        time.sleep(0.2)
+        return False
+
+if url_is_available(GITHUB_PAGES_URL):
+    url = GITHUB_PAGES_URL
 else:
-    st.error(f"Failed to start static server at {url}. Check for port conflicts.")
-    st.stop()
+    # Fall back to local static server (useful for local dev)
+    if not os.path.isdir(BUILD_DIR):
+        st.error(f"Build directory not found: {BUILD_DIR}\nRun `npm run build` in the project root first.")
+        st.stop()
+
+    server_thread = threading.Thread(target=start_static_server, args=(BUILD_DIR, STATIC_PORT), daemon=True)
+    server_thread.start()
+
+    url = f"http://localhost:{STATIC_PORT}/"
+    for _ in range(30):
+        if url_is_available(url):
+            break
+        time.sleep(0.2)
+    else:
+        st.error(f"Failed to start static server at {url}. Check for port conflicts.")
+        st.stop()
 
 # Streamlit UI
 st.set_page_config(page_title="Vedic Wisdom (Embedded)", layout="wide")
